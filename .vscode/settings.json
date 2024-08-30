@@ -1,3 +1,4 @@
 {
-    "github-enterprise.uri": "https://github.com/youngsuna/powerlifters.git"
+    "github-enterprise.uri": "https://github.com/youngsuna/powerlifters.git",
+    "java.configuration.updateBuildConfiguration": "interactive"
 }

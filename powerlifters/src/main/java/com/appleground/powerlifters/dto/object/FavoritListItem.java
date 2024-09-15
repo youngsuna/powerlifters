@@ -1,6 +1,6 @@
 package com.appleground.powerlifters.dto.object;
 
-import com.mysql.cj.x.protobuf.MysqlxDatatypes.Scalar.String;
+import java.lang.String;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

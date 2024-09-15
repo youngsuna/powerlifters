@@ -1,6 +1,8 @@
 package com.appleground.powerlifters.provider;
 
 import java.util.Date;
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtProvider {
@@ -20,9 +23,11 @@ public class JwtProvider {
     public String create(String email) {
         Date expiredDate = Date.from(Instant.now().plus(1, ChronoUnit.HOURS));
 
+        Key key = Keys.hmacShaKeyFor(secretkey.getBytes(StandardCharsets.UTF_8));
+
         String jwt = Jwts.builder()
-            .signWith (SignatureAlgorithm.ES256, secretkey)
-            .setSubject(email).setIssuedAt (new Date()).setExpiration(expiredDate)
+            .signWith(key, SignatureAlgorithm.HS256)
+            .setSubject(email).setIssuedAt(new Date()).setExpiration(expiredDate)
             .compact();
 
         return jwt;
@@ -31,10 +36,14 @@ public class JwtProvider {
     public String validate (String jwt) {
         
         Claims claims = null;
+        Key key = Keys.hmacShaKeyFor(secretkey.getBytes(StandardCharsets.UTF_8));
 
         try {
-            claims = Jwts.parser().setSigningKey(secretkey)
-                .parseClaimsJws(jwt).getBody();
+            claims = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(jwt)
+                .getBody();
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;

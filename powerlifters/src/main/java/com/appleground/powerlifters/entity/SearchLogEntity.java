@@ -1,5 +1,5 @@
 package com.appleground.powerlifters.entity;
-import com.mysql.cj.x.protobuf.MysqlxDatatypes.Scalar.String;
+import java.lang.String;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

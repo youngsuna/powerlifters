@@ -31,6 +31,12 @@ export default function Authentication() {
     const onSignInButtonClickHandler = () => {
 
     }
+
+    //    event handler: 회원가입 링크 버튼 클릭 이벤트 처리     //
+    const onSignUpButtonClickHandler = () => {
+      setView('sign-up');
+    }
+
     //    event handler: 패스워트 버튼 클릭 이벤트 처리     //
     const onPasswordButtonClickHandler = () => {
       if (passwordType === 'text') {
@@ -69,14 +75,17 @@ export default function Authentication() {
             <InputBox ref={passwordRef} label='패스워드' type={passwordType} placeholder='비밀번호를 입력해주세요.' error={error} value={password} setValue={setPassword} onKeyDown={onPasswordKeyDownHandler} icon={passwordButtonIcon} onButtonClick={onPasswordButtonClickHandler} />
           </div>
           <div className='auth-card-bottom'>
+            {error &&
+            
             <div className='auth-sign-in-error-box'>
               <div className='auth-sign-in-error-message'>
                 {'이메일 주소 또는 비밀번호를 잘못 입력했습니다.\n입력하신 내용을 다시 확인해주세요.'}
               </div>
             </div>
+            }
             <div className='black-large-full-button'>{'로그인'}</div>
             <div className='auth-description-box'>
-              <div className='auth-description'>{'아직 계정이 없으신가요?'}<span className='auth-description-link'>{'회원가입'}</span></div>
+              <div className='auth-description'>{'아직 계정이 없으신가요?'}<span className='auth-description-link' onClick={onSignUpButtonClickHandler}>{'회원가입'}</span></div>
             </div>
           </div>
         </div>

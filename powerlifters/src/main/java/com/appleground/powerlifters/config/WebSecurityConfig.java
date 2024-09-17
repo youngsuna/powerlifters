@@ -1,6 +1,7 @@
 package com.appleground.powerlifters.config;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -54,14 +55,25 @@ public class WebSecurityConfig {
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
+
     }
 
     @Bean
     protected CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("*");
-        configuration.addAllowedMethod("*");
-        configuration.addExposedHeader("*");
+        configuration.setAllowedOriginPatterns(List.of("*")); // 동적 패턴을 허용
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // 허용할 HTTP 메서드 명시
+        configuration.setAllowedHeaders(List.of("*")); // 모든 헤더 허용
+        configuration.setExposedHeaders(List.of("Authorization", "Content-Type")); // 노출할 헤더 명시
+        configuration.setAllowCredentials(true); // 쿠키, 인증 정보 전송 허용
+    
+    
+
+        // configuration.addAllowedOrigin("*");
+        // configuration.addAllowedMethod("*");
+        // configuration.addExposedHeader("*");
+        // configuration.addExposedHeader("Access-Control-Allow-Origin"); // Access-Control-Allow-Origin 헤더를 노출
+
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

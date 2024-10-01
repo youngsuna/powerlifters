@@ -14,7 +14,7 @@ export default function Container() {
     //      render: 레이아웃        //
     return (
         <div>
-            <Header />
+            {/*<Header />*/}
             <Outlet />
             {/* auth 경로일때만 푸터 안나오게  */}
             {pathname !== AUTH_PATH() && <Footer />}
